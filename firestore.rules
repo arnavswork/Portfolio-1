@@ -1,0 +1,44 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Checks if the request is coming from an authenticated user.
+     */
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Portfolio Projects: Publicly readable, admin-only writes.
+     */
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAuthenticated();
+    }
+
+    /**
+     * @description Disciplines/Categories: Publicly readable, admin-only writes.
+     */
+    match /disciplines/{disciplineId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    /**
+     * @description About Page Content: Publicly readable, admin-only writes.
+     */
+    match /aboutPageContent/{contentId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    /**
+     * @description Homepage Slideshow: Publicly readable, admin-only writes.
+     */
+    match /mainPageSlideshowItems/{itemId} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+  }
+}

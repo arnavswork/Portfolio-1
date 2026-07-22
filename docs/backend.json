@@ -1,0 +1,117 @@
+
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "type": "object",
+      "description": "Represents an administrative user for CMS access.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "email"
+      ]
+    },
+    "Discipline": {
+      "title": "Discipline",
+      "type": "object",
+      "description": "Project category (e.g., Brand Identity, Web Design).",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "Project": {
+      "title": "Project",
+      "type": "object",
+      "description": "Portfolio project details.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "year": {
+          "type": "number"
+        },
+        "discipline": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "coverImageUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "imageUrls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "featured": {
+          "type": "boolean"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "DRAFT",
+            "PUBLISHED"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "year",
+        "discipline",
+        "coverImageUrl",
+        "featured"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password"
+    ]
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": {
+        "$ref": "#/entities/Project"
+      },
+      "description": "Portfolio projects collection."
+    },
+    "/disciplines/{disciplineId}": {
+      "schema": {
+        "$ref": "#/entities/Discipline"
+      },
+      "description": "Project categories."
+    }
+  }
+}
