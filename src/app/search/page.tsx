@@ -3,14 +3,12 @@ import { SiteFooter } from '@/components/site-footer';
 import { ProjectCard } from '@/components/project-card';
 import { searchProjects } from '@/lib/data';
 
-interface PageProps {
-  searchParams: {
-    q?: string;
-  };
-}
-
-export default async function SearchPage({ searchParams }: PageProps) {
-  const query = searchParams.q;
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q: query } = await searchParams;
 
   let results: Awaited<ReturnType<typeof searchProjects>> = [];
 
